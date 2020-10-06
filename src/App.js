@@ -19,9 +19,7 @@ export default function App() {
   useEffect(() => {
     api.get('/repositories').then(response => {
       setRepositories(response.data);
-    }).catch(error => {
-      console.log('error', error);
-    });
+    })
   }, []);
 
   async function handleLikeRepository(id) {
@@ -56,20 +54,19 @@ export default function App() {
 
         <FlatList
           data={repositories}
-          keyExtractor={reposotory => reposotory.id}
+          keyExtractor={repository => repository.id}
           renderItem={({ item: repository }) => (
             <View style={styles.repositoryContainer}>
               <Text style={styles.repository}>{repository.title}</Text>
 
               <View style={styles.techsContainer}>
-                {repository.techs.map((tech, index) => {
+                {repository.techs.map((tech) => {
                   return (
                     <Text key={tech} style={styles.tech}>
                       {tech}
                     </Text>
                   )
-                })
-                }
+                })}
               </View>
 
               <View style={styles.likesContainer}>
@@ -77,8 +74,8 @@ export default function App() {
                   style={styles.likeText}
                   testID={`repository-likes-${repository.id}`}
                 >
-                  {`${repository.likes} curtidas`}
-                </Text>
+                  {repository.likes} curtidas
+              </Text>
               </View>
 
               <TouchableOpacity
@@ -89,7 +86,8 @@ export default function App() {
                 <Text style={styles.buttonText}>Curtir</Text>
               </TouchableOpacity>
             </View>
-          )} />
+          )}
+        />
       </SafeAreaView>
     </>
   );
